@@ -42,7 +42,7 @@ export class AppComponent {
 	search() {
 		this.loading = true;
 		const url =
-			`http://localhost:8000/api/search?q=${encodeURIComponent(this.searchTerm)}`
+			`/api/search?q=${encodeURIComponent(this.searchTerm)}`
 
 		this.results$ = this.http.get(url).pipe(
 			tap(() => this.loading = false),
