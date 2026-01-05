@@ -19,6 +19,25 @@ client = AsyncIOMotorClient(MONGO_URL)
 db = client.online_catalog
 
 
+@app.get("/health")
+async def health():
+    """
+    Health check endpoint for monitoring
+    """
+    try:
+        await client.admin.command('ping')
+        return {
+            "status": "healthy",
+            "database": "connected"
+        }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "database": "disconnected",
+            "error": str(e)
+        }
+
+
 @app.get("/")
 async def root():
     return {"message": "API Catálogo"}
