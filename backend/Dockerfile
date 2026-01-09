@@ -21,7 +21,7 @@ COPY src ./src
 RUN mvn package -DskipTests
 
 
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jre-alpine AS production
 
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
