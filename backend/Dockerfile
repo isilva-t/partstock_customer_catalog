@@ -1,10 +1,31 @@
-FROM python:3.11-slim
+FROM maven:3.9-eclipse-temurin-17 AS development
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
 
-COPY . .
+COPY src ./src
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+EXPOSE 8000
+CMD ["mvn", "spring-boot:run"]
+
+
+FROM maven:3.9-eclipse-temurin-17 AS build
+
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+COPY src ./src
+RUN mvn package -DskipTests
+
+
+FROM eclipse-temurin:17-jre-alpine
+
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+
+EXPOSE 8000
+
+ENTRYPOINT ["java", "-jar", "app.jar"]

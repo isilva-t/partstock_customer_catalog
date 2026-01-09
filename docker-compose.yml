@@ -1,9 +1,8 @@
 name: "online_catalog"
 
 services:
-
   frontend-dev:
-    profiles: ["dev"]
+    profiles: ["development"]
     build:
       context: ./frontend
       target: development
@@ -16,9 +15,8 @@ services:
       - catalog_network
     restart: unless-stopped
 
-
   frontend-prod:
-    profiles: ["prod"]
+    profiles: ["production"]
     build:
       context: ./frontend
       target: production
@@ -28,21 +26,26 @@ services:
       - catalog_network
     restart: unless-stopped
 
-
-
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      target: ${COMPOSE_PROFILES}
+    container_name: backend
     volumes:
-      - ./backend:/app
+      - ./backend/src:/app/src
+      - ./backend/pom.xml:/app/pom.sml:ro
+      - maven-cache:/root/.m2
       - ${DATA_PATH}/photos:/app/photos
-    environment:
-      - MONGO_URL=${MONGO_URL}
-      - DATA_PATH=${DATA_PATH}
-      - ORIGIN=${ORIGIN}
+    ports:
+      - "8009:8000"
     depends_on:
       - mongodb
     networks:
       - catalog_network
+    environment:
+      - MONGO_URL=${MONGO_URL}
+      - DATA_PATH=${DATA_PATH}
+      - ORIGIN=${ORIGIN}
     restart: unless-stopped
 
   mongodb:
@@ -58,3 +61,6 @@ services:
 networks:
   catalog_network:
     driver: bridge
+
+volumes:
+  maven-cache:
