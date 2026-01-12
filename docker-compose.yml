@@ -46,6 +46,7 @@ services:
       - MONGO_URL=${MONGO_URL}
       - DATA_PATH=${DATA_PATH}
       - ORIGIN=${ORIGIN}
+      - SYNC_TOKEN=${SYNC_TOKEN}
     restart: unless-stopped
 
   backend-dev:
