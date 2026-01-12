@@ -1,4 +1,4 @@
-package catalog.controller;
+package catalog.p10_api.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +9,6 @@ public class HealthController {
 
 	@GetMapping("/health")
 	public Map<String, String> health() {
-		return Map.of("status", "healthy");
+		return Map.of("status", "HIPERAAAAAA SUPER HEALTHY");
 	}
 }

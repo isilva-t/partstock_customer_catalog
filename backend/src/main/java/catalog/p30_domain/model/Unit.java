@@ -2,6 +2,7 @@ package catalog.p30_domain.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.index.Indexed;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -14,21 +15,25 @@ import java.util.List;
 public class Unit {
 
 	@Id
-	private String id;
+	private String id; // sku VI3-26A77
 
-	private String unitSku;
-	private String productSku;
-	private String sku;
+	@Indexed
+	private String completeSearchText; // pre concatenated by on permise
 
-	private String title;
-	private String description;
+	private String title; // pre-concatenated by on-permise
 	private Double priceWithVat;
+
+	// optional fields allways
+	private String productTitleRef;
+	private String productDescription;
+	private String unitAlternativeSku;
+	private String unitKm;
+	private String productCompatibilities;
+
+	// in frontend, will show a template photo if this empty
 	private List<String> photos;
 
 	// private ClassificationInfo classicication;
 	// private List<CompabilityInfo> compabilities;
 
-	public String getFullSku() {
-		return productSku + "-" + id;
-	}
 }
