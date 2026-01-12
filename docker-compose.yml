@@ -33,22 +33,11 @@ services:
       - DOMAIN=${DOMAIN}
     restart: unless-stopped
 
-  backend-dev:
-    extends: backend
-    profiles: ["dev"]
-    container_name: backend
-    ports:
-      - "8000:8000"
-
   backend:
+    profiles: ["_base"]
     build:
       context: ./backend
       target: ${COMPOSE_PROFILES}
-    volumes:
-      - ./backend/src:/app/src
-      - ./backend/pom.xml:/app/pom.sml:ro
-      - maven-cache:/root/.m2
-      - ${DATA_PATH}/photos:/app/photos
     depends_on:
       - mongodb
     networks:
@@ -58,6 +47,26 @@ services:
       - DATA_PATH=${DATA_PATH}
       - ORIGIN=${ORIGIN}
     restart: unless-stopped
+
+  backend-dev:
+    extends: backend
+    profiles: ["development"]
+    container_name: backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/pom.xml:/app/pom.xml:ro
+      - maven-cache:/root/.m2
+      - ${DATA_PATH}/photos:/app/photos
+
+  backend-prod:
+    extends: backend
+    profiles: ["production"]
+    container_name: backend
+    volumes:
+      - maven-cache:/root/.m2
+      - ${DATA_PATH}/photos:/app/photos
 
   mongodb:
     image: mongo:7
