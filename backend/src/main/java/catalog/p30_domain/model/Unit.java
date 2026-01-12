@@ -14,9 +14,11 @@ import java.util.List;
 public class Unit {
 
 	@Id
-	private String id; // unit.sku
+	private String id;
 
-	private String productSku; // product.sku
+	private String unitSku;
+	private String productSku;
+	private String sku;
 
 	private String title;
 	private String description;
