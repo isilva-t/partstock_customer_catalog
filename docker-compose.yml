@@ -33,11 +33,17 @@ services:
       - DOMAIN=${DOMAIN}
     restart: unless-stopped
 
+  backend-dev:
+    extends: backend
+    profiles: ["dev"]
+    container_name: backend
+    ports:
+      - "8000:8000"
+
   backend:
     build:
       context: ./backend
       target: ${COMPOSE_PROFILES}
-    container_name: backend
     volumes:
       - ./backend/src:/app/src
       - ./backend/pom.xml:/app/pom.sml:ro
