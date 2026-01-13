@@ -1,5 +1,7 @@
 # PartStock Customer Catalog
 
+Status: 🚧 In Development
+
 Public online catalog for used auto parts inventory.
 
 ## What it does
