@@ -1,5 +1,5 @@
 all:
-	mvn compile
+	make -C .. co
 
 logs:
 	cd .. && docker compose logs -f backend

@@ -3,15 +3,15 @@ package catalog.p20_application.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
+
 import catalog.p10_api.dto.UnitDTO;
 import catalog.p30_domain.model.Unit;
 
+@Component
 public class UnitMapper {
 
-	private UnitMapper() {
-	}
-
-	public static UnitDTO toDTO(Unit unit) {
+	public UnitDTO toDTO(Unit unit) {
 		if (unit == null) {
 			return null;
 		}
@@ -31,13 +31,13 @@ public class UnitMapper {
 		return dto;
 	}
 
-	public static List<UnitDTO> toDTOList(List<Unit> units) {
+	public List<UnitDTO> toDTOList(List<Unit> units) {
 		if (units == null) {
 			return List.of();
 		}
 
 		return units.stream()
-				.map(UnitMapper::toDTO)
+				.map(unit -> this.toDTO(unit))
 				.collect(Collectors.toList());
 	}
 }

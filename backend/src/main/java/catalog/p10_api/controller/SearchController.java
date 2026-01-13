@@ -16,22 +16,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class SearchController {
 
 	private final CatalogService catalogService;
+	private final UnitMapper unitMapper;
 
-	public SearchController(CatalogService catalogService) {
+	public SearchController(
+			CatalogService catalogService,
+			UnitMapper unitMapper) {
 		this.catalogService = catalogService;
+		this.unitMapper = unitMapper;
 	}
 
 	@GetMapping("/search")
 	public List<UnitDTO> search(@RequestParam String q) {
 		List<Unit> units = catalogService.searchUnits(q);
-		return UnitMapper.toDTOList(units);
+		return unitMapper.toDTOList(units);
 	}
 
 	@GetMapping("/unit/{id}")
 	public UnitDTO getUnit(@PathVariable String id) {
 		Unit unit = catalogService.getUnitById(id)
 				.orElse(null);
-		return UnitMapper.toDTO(unit);
+		return unitMapper.toDTO(unit);
 	}
 
 }
