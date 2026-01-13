@@ -38,7 +38,7 @@ public class UnitMapper {
 		}
 
 		return units.stream()
-				.map(unit -> this.toDTO(unit))
+				.map(this::toDTO)
 				.filter(Objects::nonNull)
 				.collect(Collectors.toList());
 	}
