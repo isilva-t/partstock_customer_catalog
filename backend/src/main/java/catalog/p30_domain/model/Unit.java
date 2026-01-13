@@ -27,6 +27,7 @@ public class Unit {
 	private String productTitleRef;
 	private String productDescription;
 	private String unitAlternativeSku;
+	private String unitObservations;
 	private String unitKm;
 	private String productCompatibilities;
 
