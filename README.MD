@@ -4,7 +4,9 @@ Status: 🚧 In Development
 
 Public online catalog for used auto parts inventory.
 
-## What it does
+![img](docs/img.jpg)
+
+## What it will do
 
 Displays available auto parts with photos, descriptions, and pricing for potential customers to browse and search.
 A mirror for internal stock system [Partstock](https://github.com/isilva-t/partstock)
