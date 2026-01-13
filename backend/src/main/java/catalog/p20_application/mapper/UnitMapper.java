@@ -1,6 +1,7 @@
 package catalog.p20_application.mapper;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -38,6 +39,7 @@ public class UnitMapper {
 
 		return units.stream()
 				.map(unit -> this.toDTO(unit))
+				.filter(Objects::nonNull)
 				.collect(Collectors.toList());
 	}
 }
